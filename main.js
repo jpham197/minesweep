@@ -6,7 +6,7 @@ var mines = 0;
 var count = 0;
 
 blocks.forEach((element, i) => {
-    let mine = Math.floor(Math.random() * 100) < 90 ? true: false;
+    let mine = Math.floor(Math.random() * 100) < 15 ? true: false;
     let clicked = false;
     if (mine) {
         element.style.backgroundColor = 'red';
