@@ -5,25 +5,42 @@ const tiles = [];
 var mines = 0;
 var count = 0;
 
-blocks.forEach(element => {
-    let flag = Math.floor(Math.random() * 100) < 15 ? true: false;
-    if (flag) {
+blocks.forEach((element, i) => {
+    let mine = Math.floor(Math.random() * 100) < 90 ? true: false;
+    let clicked = false;
+    if (mine) {
         element.style.backgroundColor = 'red';
         mines++;
     }
-    tiles.push({element, flag});
+    tiles.push({element, mine, clicked});
     element.addEventListener('click', () => {
-        if (flag) {
+        if (mine) {
             message.innerHTML = loseMsg[Math.floor(Math.random() * 3)];
             element.style.backgroundColor = 'red';
         } else {
-            count++;
-            if (count == (100 - mines)) {
-                message.innerHTML = "Yeet";
-            }
+            tiles[i].clicked = true;
             element.style.backgroundColor = 'blue';
+        }
+        if (checkWin(tiles)) {
+            message.innerHTML = "You Win!";
         }
     });
 });
+
+function checkWin(tiles) {
+    let flag = true;
+    tiles.forEach(element => {
+        if (!element.mine) {
+            if (!element.clicked) {
+                flag = false;
+            }
+        }
+    });
+    return flag;
+}
+
+function test() {
+    console.log(checkWin(tiles));
+}
 
 console.log(mines);
